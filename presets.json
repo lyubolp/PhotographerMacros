@@ -3,7 +3,8 @@
     {
       "name": "color_contrast",
       "color": 1.5,
-      "contrast": 1.2
+      "contrast": 1.2,
+      "temperature": 5500
     },
     {
       "name": "black_and_white",

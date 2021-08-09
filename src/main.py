@@ -4,11 +4,12 @@ from PIL import Image, ImageEnhance, ImageFilter
 
 from cli import parse_args
 from presets import read_presets
-
+from color_temperature import change_temperature
 
 class ActionTypes(Enum):
     enhanceAction = 0,
-    filter = 1
+    filter = 1,
+    custom = 2
 
 
 def generate_object_from_action(action_name):
@@ -23,7 +24,7 @@ def generate_object_from_action(action_name):
         "edge_enhance": (ImageFilter.EDGE_ENHANCE, ActionTypes.filter),
         "sharpen": (ImageFilter.SHARPEN, ActionTypes.filter),
         "smooth": (ImageFilter.SMOOTH, ActionTypes.filter),
-
+        "temperature": (change_temperature, ActionTypes.custom)
     }
 
     return objects[action_name]
@@ -72,6 +73,8 @@ if __name__ == "__main__":
                 im = obj.enhance(step[1])
             elif action_type == ActionTypes.filter:
                 im = im.filter(module)
+            elif action_type == ActionTypes.custom:
+                im = module(im, step[1])
 
         im.save(target_image)
 
