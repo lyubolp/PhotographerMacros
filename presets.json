@@ -10,6 +10,38 @@
       "color": 0.0,
       "contrast": 1.7,
       "brightness": 0.8
+    },
+    {
+      "name": "blur",
+      "blur": true
+    },
+    {
+      "name": "contour",
+      "contour": true
+    },
+    {
+      "name": "detail",
+      "detail": true
+    },
+    {
+      "name": "edge_enhance",
+      "edge_enhance": true
+    },
+    {
+      "name": "emboss",
+      "emboss": true
+    },
+    {
+      "name": "find_edges",
+      "find_edges": true
+    },
+    {
+      "name": "sharpen",
+      "sharpen": true
+    },
+    {
+      "name": "smooth",
+      "smooth": true
     }
   ]
 }
