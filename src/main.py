@@ -71,7 +71,7 @@ if __name__ == "__main__":
                 obj = module(im)
                 im = obj.enhance(step[1])
             elif action_type == ActionTypes.filter:
-                im = im.filter(obj)
+                im = im.filter(module)
 
         im.save(target_image)
 
