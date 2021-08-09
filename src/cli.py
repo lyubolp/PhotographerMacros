@@ -13,6 +13,7 @@ def parse_args() -> dict:
 
     parser.add_argument("--color", type=float, default=1.0)
     parser.add_argument("--contrast", type=float, default=1.0)
+    parser.add_argument("-v", "--verbosity", action="store_true", default=False)
 
     args = parser.parse_args()
 

@@ -1,0 +1,15 @@
+{
+  "presets": [
+    {
+      "name": "color_contrast",
+      "color": 1.5,
+      "contrast": 1.2
+    },
+    {
+      "name": "black_and_white",
+      "color": 0.0,
+      "contrast": 1.7,
+      "brightness": 0.8
+    }
+  ]
+}

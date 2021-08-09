@@ -1,12 +1,29 @@
 import os
-
 from PIL import Image, ImageEnhance
-from cli import parse_args
+
+from src.cli import parse_args
+from src.presets import read_presets
+
+
+def generate_object_from_action(action_name):
+    objects = {
+        "color": ImageEnhance.Color,
+        "contrast": ImageEnhance.Contrast,
+        "brightness": ImageEnhance.Brightness
+    }
+
+    return objects[action_name]
+
 
 if __name__ == "__main__":
 
     args = parse_args()
-    print(args)
+
+    presets = read_presets()
+
+    if args["verbosity"]:
+        print(args)
+        print(presets)
 
     source_image = args["source"]
 
@@ -16,13 +33,24 @@ if __name__ == "__main__":
 
     target_image = args["target"]
 
+    preset_name = args["preset"]
+
+    if preset_name not in [p["name"] for p in presets]:
+        print("Invalid preset name")
+        exit(1)
+
+    # There should be exactly one preset with the given name
+    preset = [p for p in presets if p["name"] == preset_name][0]
+
+    steps = [(action, preset[action]) for action in list(preset.keys())[1:]]
+
+    print("Applying preset {} to {}. Result will be written at {}".format(preset_name, source_image, target_image))
+
     with Image.open(source_image) as im:
-        color = ImageEnhance.Color(im)
-        after_color = color.enhance(1.5)
 
-        after_color.save("../after_color.jpg")
+        for step in steps:
+            print("Applying {} with value {}".format(step[0], step[1]))
+            obj = generate_object_from_action(step[0])(im)
+            im = obj.enhance(step[1])
 
-        contrast = ImageEnhance.Contrast(after_color)
-        after_contrast = contrast.enhance(1.5)
-
-        after_contrast.save("../after_contrast.jpg")
+        im.save(target_image)
