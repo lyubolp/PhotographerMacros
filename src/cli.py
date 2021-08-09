@@ -13,7 +13,7 @@ def parse_args() -> dict:
     parser.add_argument("preset", type=str, help="Which preset to be applied")
 
     parser.add_argument("-v", "--verbosity", action="store_true", default=False, help="Show more info on stdout")
-    # parser.add_argument("-q", "--quiet", action="store_true", default=False, help="Doesn't show anything on the stdout")
+    parser.add_argument("-q", "--quiet", action="store_true", default=False, help="Doesn't show anything on the stdout")
 
     args = parser.parse_args()
 
