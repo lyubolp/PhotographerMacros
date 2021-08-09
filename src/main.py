@@ -1,8 +1,8 @@
 import os
 from PIL import Image, ImageEnhance
 
-from src.cli import parse_args
-from src.presets import read_presets
+from cli import parse_args
+from presets import read_presets
 
 
 def generate_object_from_action(action_name):
