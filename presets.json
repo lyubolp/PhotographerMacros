@@ -13,6 +13,13 @@
       "brightness": 0.8
     },
     {
+      "name": "coffee",
+      "color_balance": [1.2, 1.02, 0.85],
+      "temperature": 4500,
+      "contrast": 1.1,
+      "edge_enhance": true
+    },
+    {
       "name": "blur",
       "blur": true
     },

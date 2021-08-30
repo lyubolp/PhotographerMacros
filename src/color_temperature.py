@@ -25,7 +25,7 @@ kelvin_table = {
 
 def change_temperature(image: Image, temperature: int) -> Image:
     r, g, b = kelvin_table[temperature]
-    matrix = (r / 255.0, 0.0, 0.0, 0.0,
-              0.0, g / 255.0, 0.0, 0.0,
-              0.0, 0.0, b / 255.0, 0.0)
+    matrix = (r / 255.0, 0.0,       0.0,       0.0,
+              0.0,       g / 255.0, 0.0,       0.0,
+              0.0,       0.0,       b / 255.0, 0.0)
     return image.convert("RGB", matrix)
