@@ -9,7 +9,7 @@ source .venv/bin/activate
 
 PYTHONPATH="$executable_dir"
 
-if [[ $1 != -* ]]
+if [[ -n $1 ]] && [[ $1 != -* ]]
 then
   first="$current_dir"/"$1"
 else
