@@ -50,9 +50,14 @@ if __name__ == "__main__":
     output.print("Args: {}".format(args), 2)
     output.print("Presets: {}".format(presets), 2)
 
+    if args["list"]:
+        output.print("Available presets:")
+        for preset in presets:
+            output.print(" - " + preset['name'])
+        exit(0)
+
     source_image = args["source"]
 
-    print(source_image)
     if not os.path.isfile(source_image):
         output.print("Error 1: Invalid source path", 1)
         exit(1)
@@ -73,7 +78,6 @@ if __name__ == "__main__":
     output.print("Applying preset {} to {}. Result will be written at {}".format(preset_name, source_image, target_image), 1)
 
     with Image.open(source_image) as im:
-
         for step in steps:
             output.print("Applying {} with value {}".format(step[0], step[1]), 1)
 
