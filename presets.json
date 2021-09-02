@@ -41,7 +41,7 @@
     },
     {
       "name": "find_edges",
-      "find_edges": true
+      "edge_enhance": true
     },
     {
       "name": "sharpen",
