@@ -1,6 +1,7 @@
 import os
 from enum import Enum
 from PIL import Image, ImageEnhance, ImageFilter
+from functools import reduce
 
 from cli import parse_args
 from presets import read_presets
@@ -32,6 +33,22 @@ def generate_object_from_action(action_name):
     }
 
     return objects[action_name]
+
+
+def execute_step(img: Image, step) -> Image:
+    output.print("Applying {} with value {}".format(step[0], step[1]), 1)
+
+    module, action_type = generate_object_from_action(step[0])
+
+    if action_type == ActionTypes.enhanceAction:
+        obj = module(img)
+        img = obj.enhance(step[1])
+    elif action_type == ActionTypes.filter:
+        img = img.filter(module)
+    elif action_type == ActionTypes.custom:
+        img = module(img, step[1])
+
+    return img
 
 
 if __name__ == "__main__":
@@ -78,19 +95,7 @@ if __name__ == "__main__":
     output.print("Applying preset {} to {}. Result will be written at {}".format(preset_name, source_image, target_image), 1)
 
     with Image.open(source_image) as im:
-        for step in steps:
-            output.print("Applying {} with value {}".format(step[0], step[1]), 1)
-
-            module, action_type = generate_object_from_action(step[0])
-
-            if action_type == ActionTypes.enhanceAction:
-                obj = module(im)
-                im = obj.enhance(step[1])
-            elif action_type == ActionTypes.filter:
-                im = im.filter(module)
-            elif action_type == ActionTypes.custom:
-                im = module(im, step[1])
-
+        im = reduce(execute_step, steps, im)
         im.save(target_image)
 
     output.print("Done", 1)
