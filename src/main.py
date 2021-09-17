@@ -17,7 +17,7 @@ def execute_step(img: Image, step: Step) -> Image:
     elif step.action_type == ActionTypes.filter:
         img = img.filter(step.executable)
     elif step.action_type == ActionTypes.custom:
-        img = step.executable(img, step.executable)
+        img = step.executable(img, step.value)
 
     return img
 
