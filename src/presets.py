@@ -23,8 +23,10 @@ objects = {
 }
 
 
-def load_presets(path="presets.json") -> List[Preset]:
-    presets_dict = {}
+def load_presets(path="presets.json", objects_dict=None) -> List[Preset]:
+    if objects_dict is None:
+        objects_dict = objects
+
     with open(path) as f:
         presets_dict = json.loads(f.read())["presets"]
 
@@ -32,8 +34,7 @@ def load_presets(path="presets.json") -> List[Preset]:
 
     result = []
     for preset in presets_dict:
-        steps = [Step(action, preset[action], objects[action][0], objects[action][1]) for action in preset.keys() if
-                 action != "name"]
+        steps = [Step(action, preset[action], objects_dict[action][0], objects_dict[action][1]) for action in preset.keys() if action != "name"]
         preset = Preset(preset['name'], steps)
         result.append(preset)
 
