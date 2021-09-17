@@ -1,7 +1,7 @@
 import argparse
 
 
-def parse_args() -> dict:
+def parse_args(args: list = None) -> dict:
     parser = argparse.ArgumentParser(
         prog="photographerMacros",
         description="A CLI tool which applies filters to photos",
@@ -16,6 +16,9 @@ def parse_args() -> dict:
     parser.add_argument("-v", "--verbosity", action="store_true", default=False, help="Show more info on stdout")
     parser.add_argument("-q", "--quiet", action="store_true", default=False, help="Doesn't show anything on the stdout")
 
-    args = parser.parse_args()
+    if args is None:
+        args = parser.parse_args()
+    else:
+        args = parser.parse_args(args)
 
     return args.__dict__
