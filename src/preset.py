@@ -15,6 +15,11 @@ class Step:
         self.__executable = executable
         self.__action_type = action_type
 
+    def __eq__(self, other) -> bool:
+        return all([self.__name == other.__name,
+                    self.__value == other.__value,
+                    self.__action_type == other.__action_type])
+
     @property
     def name(self) -> str:
         return self.__name
@@ -36,6 +41,9 @@ class Preset:
     def __init__(self, name: str, steps: List[Step]):
         self.__name = name
         self.__steps = steps
+
+    def __eq__(self, other):
+        return self.__name == other.__name and self.__steps == other.__steps
 
     def append(self, action: Step):
         self.__steps.append(action)
