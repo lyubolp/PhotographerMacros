@@ -1,3 +1,6 @@
+"""
+Module that applies a color temperature change
+"""
 from PIL import Image
 
 kelvin_table = {
@@ -24,8 +27,14 @@ kelvin_table = {
 
 
 def change_temperature(image: Image, temperature: int) -> Image:
-    r, g, b = kelvin_table[temperature]
-    matrix = (r / 255.0, 0.0,       0.0,       0.0,
-              0.0,       g / 255.0, 0.0,       0.0,
-              0.0,       0.0,       b / 255.0, 0.0)
+    """
+    Function used to change the temperature of an image
+    :param image: The image to be changed
+    :param temperature: The temperature to be set
+    :return: The resulting image
+    """
+    red, green, blue = kelvin_table[temperature]
+    matrix = (red / 255.0, 0.0,           0.0,       0.0,
+              0.0,         green / 255.0, 0.0,       0.0,
+              0.0,         0.0,           blue / 255.0, 0.0)
     return image.convert("RGB", matrix)
