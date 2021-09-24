@@ -23,6 +23,8 @@ else
   second="$2"
 fi
 
-python3 src/main.py "$first" "$second" "$3"
+shift 2
+
+python3 src/main.py "$first" "$second" "$@"
 
 deactivate
