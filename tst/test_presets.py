@@ -37,11 +37,13 @@ class TestPresets(unittest.TestCase):
             "presets": [
                 {
                     "name": "preset1",
+                    "description": "description for 1",
                     "step1": 1.5,
                     "step2": True
                 },
                 {
                     "name": "preset2",
+                    "description": "description for 2",
                     "step3": 3000,
                     "step4": False
                 }
@@ -64,9 +66,11 @@ class TestPresets(unittest.TestCase):
         self.assertEqual(2, len(loaded_presets))
 
         expected_presets = [Preset("preset1",
+                                   "description for 1",
                                    [Step("step1", 1.5, default_action_1, ActionTypes.filter),
                                     Step("step2", True, default_action_2, ActionTypes.enhanceAction)]),
                             Preset("preset2",
+                                   "description for 2",
                                    [Step("step3", 3000, default_action_3, ActionTypes.custom),
                                     Step("step4", False, default_action_4, ActionTypes.filter)])
                             ]

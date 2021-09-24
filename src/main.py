@@ -52,7 +52,7 @@ if __name__ == "__main__":
     if args["list"]:
         output.print("Available presets:")
         for preset in presets:
-            output.print(" - " + preset.name)
+            output.print(" - " + str(preset))
         sys.exit(0)
 
     source_image = args["source"]
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     preset_name = args["preset"]
     if preset_name not in [p.name for p in presets]:
-        output.print("Invalid preset name")
+        output.print("Error 2: Invalid preset name")
         sys.exit(1)
 
     # There should be exactly one preset with the given name
@@ -80,4 +80,4 @@ if __name__ == "__main__":
 
         im.save(target_image)
 
-    output.print("Done", 1)
+    output.print("Done")

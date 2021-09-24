@@ -72,12 +72,16 @@ class Preset:
     """
     A Preset objects represents a collection of steps to be applied to an image
     """
-    def __init__(self, name: str, steps: List[Step]):
+    def __init__(self, name: str, description: str, steps: List[Step]):
         self.__name = name
+        self.__description = description
         self.__steps = steps
 
     def __eq__(self, other):
         return self.name == other.name and self.steps == other.steps
+
+    def __str__(self):
+        return self.__name + ": " + self.__description
 
     def append(self, action: Step):
         """
@@ -104,3 +108,7 @@ class Preset:
         :return: String, containing the name of the preset
         """
         return self.__name
+
+    @property
+    def description(self) -> str:
+        return self.__description
