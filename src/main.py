@@ -5,7 +5,7 @@ import os
 import sys
 
 from functools import reduce
-from PIL import Image
+from PIL import Image, ImageOps
 
 from cli import parse_args
 from preset import Step, ActionTypes
@@ -74,10 +74,16 @@ if __name__ == "__main__":
                  .format(preset_name, source_image, target_image))
 
     with Image.open(source_image) as im:
+        # For some reason, some vertical images are not actually saved as vertical, but
+        # have a EXIF orientation tag. This call fixes that and exports images with the correct
+        # orientation.
+        # Source: https://github.com/python-pillow/Pillow/issues/4703#issuecomment-645219973
+        im = ImageOps.exif_transpose(im)
+
         # Really cool way to apply the steps to the image one by one
         # https://docs.python.org/3/library/functools.html?highlight=reduce#functools.reduce
         im = reduce(execute_step, preset.steps, im)
 
-        im.save(target_image)
+        im.save(target_image, im.format)
 
     output.print("Done")
