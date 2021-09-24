@@ -28,9 +28,11 @@ class TestPreset(unittest.TestCase):
         steps = [Step(temp_names[i], temp_values[i], temp_executables[i], temp_action_types[i]) for i in range(len(temp_names))]
 
         instance_name = "foo"
-        temp_instance = Preset(instance_name, steps)
+        instance_description = "description"
+        temp_instance = Preset(instance_name, instance_description, steps)
 
         self.assertEqual(instance_name, temp_instance.name)
+        self.assertEqual(instance_description, temp_instance.description)
 
         for i, step in enumerate(temp_instance.steps):
             self.assertEqual(steps[i], step)

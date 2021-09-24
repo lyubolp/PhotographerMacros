@@ -3,7 +3,7 @@ name: Unittests
 on: [pull_request]
 
 jobs:
-  build:
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,4 +20,6 @@ jobs:
       run: |
         export PYTHONPATH=$PYTHONPATH:$(pwd)/src
         python3 -m unittest discover tst
+        coverage run -m unittest discover tst
+        coverage report -m --include="src/*" --fail-under 85
 
