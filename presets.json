@@ -2,18 +2,21 @@
   "presets": [
     {
       "name": "color_contrast",
+      "description": "Changes the color and contrast, to produce more vivid images",
       "color": 1.5,
       "contrast": 1.2,
       "temperature": 5500
     },
     {
       "name": "black_and_white",
+      "description": "Turns an image black and white",
       "color": 0.0,
       "contrast": 1.7,
       "brightness": 0.8
     },
     {
       "name": "coffee",
+      "description": "Boosts red and green colors, resulting in an orange-ish hue on the image",
       "color_balance": [1.2, 1.02, 0.85],
       "temperature": 4500,
       "contrast": 1.1,

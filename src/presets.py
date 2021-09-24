@@ -43,9 +43,19 @@ def load_presets(path="presets.json", objects_dict=None) -> List[Preset]:
 
     result = []
     for preset in presets_dict:
+
+        name = preset['name']
+        del preset['name']
+
+        description = ""
+
+        if 'description' in preset:
+            description = preset['description']
+            del preset['description']
+
         steps = [Step(action, preset[action], objects_dict[action][0], objects_dict[action][1])
-                 for action in preset.keys() if action != "name"]
-        preset = Preset(preset['name'], steps)
+                 for action in preset.keys()]
+        preset = Preset(name, description, steps)
         result.append(preset)
 
     return result

@@ -52,7 +52,7 @@ if __name__ == "__main__":
     if args["list"]:
         output.print("Available presets:")
         for preset in presets:
-            output.print(" - " + preset.name)
+            output.print(" - " + str(preset))
         sys.exit(0)
 
     source_image = args["source"]
