@@ -9,7 +9,7 @@ source .venv/bin/activate
 
 PYTHONPATH="$executable_dir"
 
-if [[ $1 != -* ]]
+if [[ -n $1 ]] && [[ $1 != -* ]]
 then
   first="$current_dir"/"$1"
 else
@@ -23,6 +23,8 @@ else
   second="$2"
 fi
 
-python3 src/main.py "$first" "$second" "$3"
+shift 2
+
+python3 src/main.py "$first" "$second" "$@"
 
 deactivate

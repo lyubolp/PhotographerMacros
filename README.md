@@ -36,3 +36,14 @@ optional arguments:
 
 <img src="https://raw.githubusercontent.com/lyubolp/PhotographerMacros/main/sample/black_and_white.jpg" alt="Black & white" style="zoom:33%;" />
 
+*winter*
+
+<img src="https://raw.githubusercontent.com/lyubolp/PhotographerMacros/main/sample/winter.jpg" alt="Black & white" style="zoom:33%;" />
+
+*forest*
+
+<img src="https://raw.githubusercontent.com/lyubolp/PhotographerMacros/main/sample/forest.jpg" alt="Black & white" style="zoom:33%;" />
+
+*lazy*
+
+<img src="https://raw.githubusercontent.com/lyubolp/PhotographerMacros/main/sample/lazy.jpg" alt="Black & white" style="zoom:33%;" />

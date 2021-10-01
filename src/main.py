@@ -1,92 +1,89 @@
+"""
+Contains main logic of the app
+"""
 import os
-from enum import Enum
-from PIL import Image, ImageEnhance, ImageFilter
+import sys
+
+from functools import reduce
+from PIL import Image, ImageOps
 
 from cli import parse_args
-from presets import read_presets
-from color_temperature import change_temperature
+from preset import Step, ActionTypes
+from presets import load_presets
 from output import OutputHandler
-from change_color_balance import change_color_balance
 
 
-class ActionTypes(Enum):
-    enhanceAction = 0,
-    filter = 1,
-    custom = 2
+def execute_step(img: Image, step: Step) -> Image:
+    """
+    Executes a given step on an Image
 
+    :param img: The image on which the filter will be applied
+    :param step: The step to be applied
+    :return: The resulting image
+    """
+    output.print("Applying {} with value {}".format(step.name, step.value))
 
-def generate_object_from_action(action_name):
-    objects = {
-        "color": (ImageEnhance.Color, ActionTypes.enhanceAction),
-        "contrast": (ImageEnhance.Contrast, ActionTypes.enhanceAction),
-        "brightness": (ImageEnhance.Brightness, ActionTypes.enhanceAction),
-        "sharpness": (ImageEnhance.Sharpness, ActionTypes.enhanceAction),
-        "blur": (ImageFilter.BLUR, ActionTypes.filter),
-        "contour": (ImageFilter.CONTOUR, ActionTypes.filter),
-        "detail": (ImageFilter.DETAIL, ActionTypes.filter),
-        "edge_enhance": (ImageFilter.EDGE_ENHANCE, ActionTypes.filter),
-        "sharpen": (ImageFilter.SHARPEN, ActionTypes.filter),
-        "smooth": (ImageFilter.SMOOTH, ActionTypes.filter),
-        "temperature": (change_temperature, ActionTypes.custom),
-        "color_balance": (change_color_balance, ActionTypes.custom)
-    }
+    if step.action_type == ActionTypes.enhanceAction:
+        obj = step.executable(img)
+        img = obj.enhance(step.value)
+    elif step.action_type == ActionTypes.filter:
+        img = img.filter(step.executable)
+    elif step.action_type == ActionTypes.custom:
+        img = step.executable(img, step.value)
 
-    return objects[action_name]
+    return img
 
 
 if __name__ == "__main__":
 
     args = parse_args()
-    presets = read_presets()
+    presets = load_presets()
 
-    output_level = 1
+    OUTPUT_LEVEL = 1
     if args["verbosity"]:
-        output_level = 2
+        OUTPUT_LEVEL = 2
     elif args["quiet"]:
-        output_level = 0
+        OUTPUT_LEVEL = 0
 
-    output = OutputHandler(output_level)
-
+    output = OutputHandler(OUTPUT_LEVEL)
     output.print("Args: {}".format(args), 2)
     output.print("Presets: {}".format(presets), 2)
 
-    source_image = args["source"]
+    if args["list"]:
+        output.print("Available presets:")
+        for preset in presets:
+            output.print(" - " + str(preset))
+        sys.exit(0)
 
-    print(source_image)
+    source_image = args["source"]
     if not os.path.isfile(source_image):
-        output.print("Error 1: Invalid source path", 1)
-        exit(1)
+        output.print("Error 1: Invalid source path")
+        sys.exit(1)
 
     target_image = args["target"]
 
     preset_name = args["preset"]
-
-    if preset_name not in [p["name"] for p in presets]:
-        output.print("Invalid preset name", 1)
-        exit(1)
+    if preset_name not in [p.name for p in presets]:
+        output.print("Error 2: Invalid preset name")
+        sys.exit(1)
 
     # There should be exactly one preset with the given name
-    preset = [p for p in presets if p["name"] == preset_name][0]
+    preset = [p for p in presets if p.name == preset_name][0]
 
-    steps = [(action, preset[action]) for action in list(preset.keys())[1:]]
-
-    output.print("Applying preset {} to {}. Result will be written at {}".format(preset_name, source_image, target_image), 1)
+    output.print("Applying preset {} to {}. Result will be written at {}"
+                 .format(preset_name, source_image, target_image))
 
     with Image.open(source_image) as im:
+        # For some reason, some vertical images are not actually saved as vertical, but
+        # have a EXIF orientation tag. This call fixes that and exports images with the correct
+        # orientation.
+        # Source: https://github.com/python-pillow/Pillow/issues/4703#issuecomment-645219973
+        im = ImageOps.exif_transpose(im)
 
-        for step in steps:
-            output.print("Applying {} with value {}".format(step[0], step[1]), 1)
+        # Really cool way to apply the steps to the image one by one
+        # https://docs.python.org/3/library/functools.html?highlight=reduce#functools.reduce
+        im = reduce(execute_step, preset.steps, im)
 
-            module, action_type = generate_object_from_action(step[0])
+        im.save(target_image, im.format)
 
-            if action_type == ActionTypes.enhanceAction:
-                obj = module(im)
-                im = obj.enhance(step[1])
-            elif action_type == ActionTypes.filter:
-                im = im.filter(module)
-            elif action_type == ActionTypes.custom:
-                im = module(im, step[1])
-
-        im.save(target_image)
-
-    output.print("Done", 1)
+    output.print("Done")
