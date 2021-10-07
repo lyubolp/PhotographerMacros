@@ -28,8 +28,7 @@
       "temperature": 8500,
       "color": 0.7,
       "contrast": 1.2,
-      "color_balance": [0.9, 0.9, 1.2],
-      "color_balance": [0.9, 0.9, 0.9]
+      "color_balance": [0.9, 0.9, 1.2]
     },
     {
       "name": "lazy",
@@ -46,6 +45,14 @@
       "color_balance": [0.9, 1.2, 0.8]
     },
 
+    {
+      "name": "moon",
+      "description": "Turns image black and white, then colors it blue-ish",
+      "color": 0.0,
+      "brightness": 0.3,
+      "contrast": 2.5,
+      "color_balance": [0.9, 1.5, 2.3]
+    },
     {
       "name": "blur",
       "blur": true
