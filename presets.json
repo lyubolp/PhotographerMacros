@@ -47,6 +47,11 @@
     },
 
     {
+      "name": "portrait_mode",
+      "portrait_mode": true
+    },
+
+    {
       "name": "blur",
       "blur": true
     },

@@ -7,6 +7,7 @@ from PIL import ImageEnhance, ImageFilter
 
 from change_color_balance import change_color_balance
 from color_temperature import change_temperature
+from portrait_mode import portrait_mode
 from preset import Preset, Step, ActionTypes
 
 objects = {
@@ -22,7 +23,8 @@ objects = {
     "smooth": (ImageFilter.SMOOTH, ActionTypes.filter),
     "temperature": (change_temperature, ActionTypes.custom),
     "color_balance": (change_color_balance, ActionTypes.custom),
-    "emboss": (ImageFilter.EMBOSS, ActionTypes.filter)
+    "emboss": (ImageFilter.EMBOSS, ActionTypes.filter),
+    "portrait_mode": (portrait_mode, ActionTypes.custom)
 }
 
 
