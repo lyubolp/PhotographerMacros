@@ -4,22 +4,22 @@ from PIL import Image
 import numpy as np
 
 
-def expand_left(image: np.array, color: List[int], size: int, by: int) -> np.array:
+def __expand_left(image: np.array, color: List[int], size: int, by: int) -> np.array:
     column = np.tile(color, size).reshape((size, 3))
     return np.append(np.tile(column, by).reshape((size, by, 3)), image, 1)
 
 
-def expand_right(image: np.array, color: List[int], size: int, by: int) -> np.array:
+def __expand_right(image: np.array, color: List[int], size: int, by: int) -> np.array:
     column = np.tile(color, size).reshape((size, 3))
     return np.append(image, np.tile(column, by).reshape((size, by, 3)), 1)
 
 
-def expand_up(image: np.array, color: List[int], size: int, by: int) -> np.array:
+def __expand_up(image: np.array, color: List[int], size: int, by: int) -> np.array:
     row = np.tile(color, size).reshape((size, 3))
     return np.append(np.tile(row, by).reshape((by, size, 3)), image, 0)
 
 
-def expand_down(image: np.array, color: List[int], size: int, by: int) -> np.array:
+def __expand_down(image: np.array, color: List[int], size: int, by: int) -> np.array:
     row = np.tile(color, size).reshape((size, 3))
     return np.append(image, np.tile(row, by).reshape((by, size, 3)), 0)
 
@@ -39,15 +39,13 @@ def fill_to_square(image: Image, color_to_fill: str) -> Image:
 
     color = np.array([red, green, blue], dtype='uint8')
 
-    print(f"image.size() = {image.size}")
-
     if height > width:
         expand_with = (height - width) // 2
-        image_as_np = expand_left(image_as_np, color, height, expand_with)
-        image_as_np = expand_right(image_as_np, color, height, expand_with)
+        image_as_np = __expand_left(image_as_np, color, height, expand_with)
+        image_as_np = __expand_right(image_as_np, color, height, expand_with)
     else:
         expand_with = (width - height) // 2
-        image_as_np = expand_up(image_as_np, color, width, expand_with)
-        image_as_np = expand_down(image_as_np, color, width, expand_with)
+        image_as_np = __expand_up(image_as_np, color, width, expand_with)
+        image_as_np = __expand_down(image_as_np, color, width, expand_with)
 
     return Image.fromarray(image_as_np)
