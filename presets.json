@@ -54,6 +54,11 @@
       "color_balance": [0.9, 1.5, 2.3]
     },
     {
+      "name": "box_white",
+      "description": "Transforms the image to a box, filling the gaps with white",
+      "fill_to_square": "#ffffff"
+    },
+    {
       "name": "blur",
       "blur": true
     },
