@@ -8,3 +8,4 @@ importlib-metadata==4.8.1
 numpy==1.21.2
 Pillow==8.3.2
 zipp==3.6.0
+PySimpleGUI~=4.55.1
