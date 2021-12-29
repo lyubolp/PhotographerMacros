@@ -59,6 +59,11 @@
       "fill_to_square": "#ffffff"
     },
     {
+      "name": "box_black",
+      "description": "Transforms the image to a box, filling the gaps with black",
+      "fill_to_square": "#000000"
+    },
+    {
       "name": "blur",
       "blur": true
     },
