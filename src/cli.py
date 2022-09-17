@@ -4,6 +4,8 @@ Contains the parse_args function, used for CLI parsing
 
 import argparse
 
+from mode import Mode
+
 
 def parse_args(args: list = None) -> dict:
     """
@@ -34,7 +36,6 @@ def parse_args(args: list = None) -> dict:
     edit.add_argument("-l", "--list", action="store_true", default=False,
                         help="Show a list of presets")
 
-
     organize = subparser.add_parser('organize')
     organize.add_argument("work_dir", type=str, help="Working directory", nargs="?", default="")
 
@@ -43,4 +44,8 @@ def parse_args(args: list = None) -> dict:
     else:
         args = parser.parse_args(args)
 
-    return args.__dict__
+    args = args.__dict__
+
+    args['mode'] = Mode.from_str(args['mode'])
+
+    return args

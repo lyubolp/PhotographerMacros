@@ -8,9 +8,11 @@ from functools import reduce
 from PIL import Image, ImageOps
 
 from cli import parse_args
+from mode import Mode
+from organizer import Organizer
+from output import OutputHandler
 from preset import Step, ActionTypes
 from presets import load_presets
-from output import OutputHandler
 
 
 def execute_step(img: Image, step: Step) -> Image:
@@ -49,46 +51,46 @@ if __name__ == "__main__":
     output.print("Args: {}".format(args), 2)
     output.print("Presets: {}".format(presets), 2)
 
-    # TODO: Create an abstraction for the mode
-    if args['mode'] == 'edit':
-        # TODO: Move this somewhere else
-        if args["list"]:
-            output.print("Available presets:")
-            for preset in presets:
-                output.print(" - " + str(preset))
-            sys.exit(0)
+    match args['mode']:
+        case Mode.EDIT:
+            # TODO: Move this somewhere else
+            if args["list"]:
+                output.print("Available presets:")
+                for preset in presets:
+                    output.print(" - " + str(preset))
+                sys.exit(0)
 
-        source_image = args["source"]
-        if not os.path.isfile(source_image):
-            output.print("Error 1: Invalid source path")
-            sys.exit(1)
+            source_image = args["source"]
+            if not os.path.isfile(source_image):
+                output.print("Error 1: Invalid source path")
+                sys.exit(1)
 
-        target_image = args["target"]
+            target_image = args["target"]
 
-        preset_name = args["preset"]
-        if preset_name not in [p.name for p in presets]:
-            output.print("Error 2: Invalid preset name")
-            sys.exit(1)
+            preset_name = args["preset"]
+            if preset_name not in [p.name for p in presets]:
+                output.print("Error 2: Invalid preset name")
+                sys.exit(1)
 
-        # There should be exactly one preset with the given name
-        preset = [p for p in presets if p.name == preset_name][0]
+            # There should be exactly one preset with the given name
+            preset = [p for p in presets if p.name == preset_name][0]
 
-        output.print("Applying preset {} to {}. Result will be written at {}"
-                     .format(preset_name, source_image, target_image))
+            output.print("Applying preset {} to {}. Result will be written at {}"
+                         .format(preset_name, source_image, target_image))
 
-        with Image.open(source_image) as im:
-            # For some reason, some vertical images are not actually saved as vertical, but
-            # have a EXIF orientation tag. This call fixes that and exports images with the correct
-            # orientation.
-            # Source: https://github.com/python-pillow/Pillow/issues/4703#issuecomment-645219973
-            im = ImageOps.exif_transpose(im)
+            with Image.open(source_image) as im:
+                # For some reason, some vertical images are not actually saved as vertical, but
+                # have a EXIF orientation tag. This call fixes that and exports images with the correct
+                # orientation.
+                # Source: https://github.com/python-pillow/Pillow/issues/4703#issuecomment-645219973
+                im = ImageOps.exif_transpose(im)
 
-            # Really cool way to apply the steps to the image one by one
-            # https://docs.python.org/3/library/functools.html?highlight=reduce#functools.reduce
-            im = reduce(execute_step, preset.steps, im)
+                # Really cool way to apply the steps to the image one by one
+                # https://docs.python.org/3/library/functools.html?highlight=reduce#functools.reduce
+                im = reduce(execute_step, preset.steps, im)
 
-            im.save(target_image, im.format)
-    elif args['mode'] == 'organize':
-        print('New mode')
+                im.save(target_image, im.format)
+        case Mode.ORGANIZE:
+            organizer = Organizer('sample')
 
     output.print("Done")
