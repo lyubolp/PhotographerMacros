@@ -59,6 +59,6 @@ while True:
         filename = values["-FILE-"]
         print(f"File to open = {filename}")
         window["-IMAGE-"].update(filename=filename)
-        image_elem.update(data=get_img_data(filename, first=True))
+        # image_elem.update(data=get_img_data(filename, first=True))
 
 window.close()

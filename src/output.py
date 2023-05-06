@@ -29,3 +29,11 @@ class OutputHandler:
         """
         if target_level <= self._level:
             print(message)
+
+    def log(self, message: str):
+        """
+        Method used for logging messages to the proper location
+
+        :param message:
+        """
+        raise NotImplementedError("Not implemented yet")

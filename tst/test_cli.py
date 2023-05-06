@@ -1,8 +1,15 @@
+"""
+Module containing the CLITests class
+"""
+
 import unittest
 from src.cli import parse_args
 
 
 class CLITests(unittest.TestCase):
+    """
+    Contains unittests for the CLI module
+    """
     def test_01_list(self):
         arguments = ['-l']
         result = parse_args(arguments)

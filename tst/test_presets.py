@@ -3,8 +3,8 @@ import os
 import unittest
 from json import JSONDecodeError
 
-from preset import Preset, Step, ActionTypes
-from presets import load_presets
+from src.preset import Preset, Step, ActionTypes
+from src.presets import load_presets
 
 
 def default_action_1(value: float):
@@ -56,10 +56,10 @@ class TestPresets(unittest.TestCase):
             f.write(json_to_write)
 
         mocked_objects = {
-            "step1": (default_action_1, ActionTypes.filter),
-            "step2": (default_action_2, ActionTypes.enhanceAction),
-            "step3": (default_action_3, ActionTypes.custom),
-            "step4": (default_action_4, ActionTypes.filter),
+            "step1": (default_action_1, ActionTypes.FILTER),
+            "step2": (default_action_2, ActionTypes.ENHANCE_ACTION),
+            "step3": (default_action_3, ActionTypes.CUSTOM),
+            "step4": (default_action_4, ActionTypes.FILTER),
         }
 
         loaded_presets = load_presets(self.temp_file_path, mocked_objects)
@@ -67,12 +67,12 @@ class TestPresets(unittest.TestCase):
 
         expected_presets = [Preset("preset1",
                                    "description for 1",
-                                   [Step("step1", 1.5, default_action_1, ActionTypes.filter),
-                                    Step("step2", True, default_action_2, ActionTypes.enhanceAction)]),
+                                   [Step("step1", 1.5, default_action_1, ActionTypes.FILTER),
+                                    Step("step2", True, default_action_2, ActionTypes.ENHANCE_ACTION)]),
                             Preset("preset2",
                                    "description for 2",
-                                   [Step("step3", 3000, default_action_3, ActionTypes.custom),
-                                    Step("step4", False, default_action_4, ActionTypes.filter)])
+                                   [Step("step3", 3000, default_action_3, ActionTypes.CUSTOM),
+                                    Step("step4", False, default_action_4, ActionTypes.FILTER)])
                             ]
 
         for index, preset in enumerate(loaded_presets):

@@ -26,7 +26,7 @@ kelvin_table = {
 }
 
 
-def change_temperature(image: Image, temperature: int) -> Image:
+def change_temperature(image: Image.Image, temperature: int) -> Image.Image:
     """
     Function used to change the temperature of an image
     :param image: The image to be changed
