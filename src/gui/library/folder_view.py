@@ -1,3 +1,8 @@
+"""
+Module containing the FolderView class and the functions needed to run it.
+The main idea is to have a window from which the user can select images, put them in categories
+    and apply operations to them.
+"""
 import io
 import os.path
 
