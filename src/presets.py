@@ -7,6 +7,7 @@ from PIL import ImageEnhance, ImageFilter
 
 from src.change_color_balance import change_color_balance
 from src.color_temperature import change_temperature
+from src.fill_to_square import fill_to_square
 from src.preset import Preset, Step, ActionTypes
 
 objects = {
@@ -22,7 +23,8 @@ objects = {
     "smooth": (ImageFilter.SMOOTH, ActionTypes.FILTER),
     "temperature": (change_temperature, ActionTypes.CUSTOM),
     "color_balance": (change_color_balance, ActionTypes.CUSTOM),
-    "emboss": (ImageFilter.EMBOSS, ActionTypes.FILTER)
+    "emboss": (ImageFilter.EMBOSS, ActionTypes.FILTER),
+    "fill_to_square": (fill_to_square, ActionTypes.CUSTOM)
 }
 
 
