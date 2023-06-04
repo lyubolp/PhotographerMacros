@@ -7,7 +7,7 @@ cd "$executable_dir" || exit
 
 source .venv/bin/activate
 
-PYTHONPATH="$executable_dir"
+
 
 if [[ -n $1 ]] && [[ $1 != -* ]] && stat "$1" >/dev/null 2>&1 
 then
@@ -25,6 +25,6 @@ fi
 
 shift 2
 
-python3 src/main.py "$first" "$second" "$@"
+PYTHONPATH="$executable_dir" python3 src/main.py "$first" "$second" "$@"
 
 deactivate
