@@ -4,4 +4,13 @@
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.mypyEnabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tst",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true,
 }
