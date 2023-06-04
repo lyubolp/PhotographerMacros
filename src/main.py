@@ -8,11 +8,13 @@ from functools import reduce
 from PIL import Image, ImageOps
 
 from cli import parse_args
+from execution import execute_query
 from preset import Step, ActionTypes
 from presets import load_presets
 from output import OutputHandler
+from queries import load_queries
 
-
+# TODO Move this to execution.py
 def execute_step(img: Image, step: Step) -> Image:
     """
     Executes a given step on an Image
@@ -38,6 +40,7 @@ if __name__ == "__main__":
 
     args = parse_args()
     presets = load_presets()
+    queries = load_queries()
 
     OUTPUT_LEVEL = 1
     if args["verbosity"]:
@@ -48,11 +51,16 @@ if __name__ == "__main__":
     output = OutputHandler(OUTPUT_LEVEL)
     output.print("Args: {}".format(args), 2)
     output.print("Presets: {}".format(presets), 2)
+    output.print("Queries: {}".format(queries), 2)
 
     if args["list"]:
         output.print("Available presets:")
         for preset in presets:
             output.print(" - " + str(preset))
+
+        output.print("Available queries:")
+        for query in queries:
+            output.print(" - " + str(query))
         sys.exit(0)
 
     source_image = args["source"]
@@ -60,8 +68,22 @@ if __name__ == "__main__":
         output.print("Error 1: Invalid source path")
         sys.exit(1)
 
+    if args["query"] is not None:
+        query_name = args["query"]
+
+        try: 
+            result = execute_query(query_name, queries, source_image)
+        except ValueError as e:
+            output.print("Error 3: {}".format(e))
+            sys.exit(1)
+
+        output.print("Result: {}".format(result))
+        output.print("Done")
+        sys.exit(0)
+
     target_image = args["target"]
 
+    # TODO: Move this logic to execution.py and wrap it in a function
     preset_name = args["preset"]
     if preset_name not in [p.name for p in presets]:
         output.print("Error 2: Invalid preset name")
