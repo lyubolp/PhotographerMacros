@@ -5,28 +5,6 @@ import json
 from typing import List
 from PIL import ImageEnhance, ImageFilter
 
-<<<<<<< HEAD
-from change_color_balance import change_color_balance
-from color_temperature import change_temperature
-from preset import Preset, Step, ActionTypes
-from fill_to_square import fill_to_square
-
-objects = {
-    "color": (ImageEnhance.Color, ActionTypes.enhanceAction),
-    "contrast": (ImageEnhance.Contrast, ActionTypes.enhanceAction),
-    "brightness": (ImageEnhance.Brightness, ActionTypes.enhanceAction),
-    "sharpness": (ImageEnhance.Sharpness, ActionTypes.enhanceAction),
-    "blur": (ImageFilter.BLUR, ActionTypes.filter),
-    "contour": (ImageFilter.CONTOUR, ActionTypes.filter),
-    "detail": (ImageFilter.DETAIL, ActionTypes.filter),
-    "edge_enhance": (ImageFilter.EDGE_ENHANCE, ActionTypes.filter),
-    "sharpen": (ImageFilter.SHARPEN, ActionTypes.filter),
-    "smooth": (ImageFilter.SMOOTH, ActionTypes.filter),
-    "temperature": (change_temperature, ActionTypes.custom),
-    "color_balance": (change_color_balance, ActionTypes.custom),
-    "emboss": (ImageFilter.EMBOSS, ActionTypes.filter),
-    "fill_to_square": (fill_to_square, ActionTypes.custom)
-=======
 from src.change_color_balance import change_color_balance
 from src.color_temperature import change_temperature
 from src.preset import Preset, Step, ActionTypes
@@ -45,7 +23,6 @@ objects = {
     "temperature": (change_temperature, ActionTypes.CUSTOM),
     "color_balance": (change_color_balance, ActionTypes.CUSTOM),
     "emboss": (ImageFilter.EMBOSS, ActionTypes.FILTER)
->>>>>>> main
 }
 
 
