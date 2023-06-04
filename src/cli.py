@@ -4,8 +4,10 @@ Contains the parse_args function, used for CLI parsing
 
 import argparse
 
+from typing import Optional
 
-def parse_args(args: list = None) -> dict:
+
+def parse_args(args: Optional[list] = None) -> dict:
     """
     Parses the command line arguments
     :param args: Optional, used for testing
@@ -26,12 +28,13 @@ def parse_args(args: list = None) -> dict:
                         help="Show a list of presets")
     parser.add_argument("-v", "--verbosity", action="store_true", default=False,
                         help="Show more info on stdout")
-    parser.add_argument("-q", "--quiet", action="store_true", default=False,
+    parser.add_argument("-q", "--query", type=str, help="Execute a query")
+    parser.add_argument("--quiet", action="store_true", default=False,
                         help="Doesn't show anything on the stdout")
 
     if args is None:
-        args = parser.parse_args()
+        parsed_args = parser.parse_args()
     else:
-        args = parser.parse_args(args)
+        parsed_args = parser.parse_args(args)
 
-    return args.__dict__
+    return parsed_args.__dict__

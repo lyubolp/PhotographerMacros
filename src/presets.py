@@ -5,24 +5,24 @@ import json
 from typing import List
 from PIL import ImageEnhance, ImageFilter
 
-from change_color_balance import change_color_balance
-from color_temperature import change_temperature
-from preset import Preset, Step, ActionTypes
+from src.change_color_balance import change_color_balance
+from src.color_temperature import change_temperature
+from src.preset import Preset, Step, ActionTypes
 
 objects = {
-    "color": (ImageEnhance.Color, ActionTypes.enhanceAction),
-    "contrast": (ImageEnhance.Contrast, ActionTypes.enhanceAction),
-    "brightness": (ImageEnhance.Brightness, ActionTypes.enhanceAction),
-    "sharpness": (ImageEnhance.Sharpness, ActionTypes.enhanceAction),
-    "blur": (ImageFilter.BLUR, ActionTypes.filter),
-    "contour": (ImageFilter.CONTOUR, ActionTypes.filter),
-    "detail": (ImageFilter.DETAIL, ActionTypes.filter),
-    "edge_enhance": (ImageFilter.EDGE_ENHANCE, ActionTypes.filter),
-    "sharpen": (ImageFilter.SHARPEN, ActionTypes.filter),
-    "smooth": (ImageFilter.SMOOTH, ActionTypes.filter),
-    "temperature": (change_temperature, ActionTypes.custom),
-    "color_balance": (change_color_balance, ActionTypes.custom),
-    "emboss": (ImageFilter.EMBOSS, ActionTypes.filter)
+    "color": (ImageEnhance.Color, ActionTypes.ENHANCE_ACTION),
+    "contrast": (ImageEnhance.Contrast, ActionTypes.ENHANCE_ACTION),
+    "brightness": (ImageEnhance.Brightness, ActionTypes.ENHANCE_ACTION),
+    "sharpness": (ImageEnhance.Sharpness, ActionTypes.ENHANCE_ACTION),
+    "blur": (ImageFilter.BLUR, ActionTypes.FILTER),
+    "contour": (ImageFilter.CONTOUR, ActionTypes.FILTER),
+    "detail": (ImageFilter.DETAIL, ActionTypes.FILTER),
+    "edge_enhance": (ImageFilter.EDGE_ENHANCE, ActionTypes.FILTER),
+    "sharpen": (ImageFilter.SHARPEN, ActionTypes.FILTER),
+    "smooth": (ImageFilter.SMOOTH, ActionTypes.FILTER),
+    "temperature": (change_temperature, ActionTypes.CUSTOM),
+    "color_balance": (change_color_balance, ActionTypes.CUSTOM),
+    "emboss": (ImageFilter.EMBOSS, ActionTypes.FILTER)
 }
 
 
@@ -38,7 +38,7 @@ def load_presets(path="presets.json", objects_dict=None) -> List[Preset]:
     if objects_dict is None:
         objects_dict = objects
 
-    with open(path) as file_handler:
+    with open(path, encoding="utf-8") as file_handler:
         presets_dict = json.loads(file_handler.read())["presets"]
 
     result = []

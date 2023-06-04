@@ -5,7 +5,7 @@ from typing import List
 from PIL import Image
 
 
-def change_color_balance(image: Image, factors: List[float]) -> Image:
+def change_color_balance(image: Image.Image, factors: List[float]) -> Image.Image:
     """
     Function that changes the color balance by multiplying the image matrix by another matrix
     containing the factors for each channel

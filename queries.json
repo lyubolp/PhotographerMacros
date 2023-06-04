@@ -1,0 +1,9 @@
+{
+  "queries": [
+    {
+      "name": "dominant_color",
+      "description": "Calculate the dominant color of an image",
+      "dominant_color": true
+    }
+  ]
+}
