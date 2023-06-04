@@ -18,8 +18,8 @@ push: venv lint test
     git push
 
 coverage: venv
-    coverage run -m unittest discover -s tests
-    coverage report -m --fail-under 75
+    coverage run --source="src" -m unittest discover -s tst 
+    coverage report -m --fail-under 75 --include="src/*" --sort=cover
 
 run: venv
     python3 src/main.py
