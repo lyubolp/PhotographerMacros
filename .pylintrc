@@ -1,0 +1,4 @@
+[MASTER]
+
+# Ignore TODO comments
+disable=W0511 

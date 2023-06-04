@@ -10,9 +10,9 @@ class ActionTypes(Enum):
     Enums that keeps the type of an action - "enhance" & "filter" are from the PIL library,
     while the "custom" one represents a custom action (not part of the PIL lib)
     """
-    enhanceAction = 0
-    filter = 1
-    custom = 2
+    ENHANCE_ACTION = 0
+    FILTER = 1
+    CUSTOM = 2
 
 
 class Step:
@@ -111,4 +111,9 @@ class Preset:
 
     @property
     def description(self) -> str:
+        """
+        Returns the description of the preset
+
+        :return: String, containing the description of the preset
+        """
         return self.__description
