@@ -1,11 +1,10 @@
 """
 Module that contains the function to get the dominant color of an image
 """
-from typing import Tuple
 from PIL import Image
 
 
-def calculate_dominant_color(image: Image.Image) -> Tuple[int, int, int]:
+def calculate_dominant_color(image: Image.Image):
     """
     Calculate the dominant color of an image
     :param image: Image to calculate the dominant color

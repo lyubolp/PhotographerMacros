@@ -8,7 +8,7 @@ class TestStep(unittest.TestCase):
         temp_name = "name"
         temp_value = "value"
         temp_executable = lambda x: x
-        temp_action_type = ActionTypes.filter
+        temp_action_type = ActionTypes.FILTER
 
         temp_instance = Step(temp_name, temp_value, temp_executable, temp_action_type)
 
@@ -23,7 +23,7 @@ class TestPreset(unittest.TestCase):
         temp_names = ["name1", "name2", "name3"]
         temp_values = ["value1", "value2", "value3"]
         temp_executables = [lambda x: x, lambda y: y + 2, lambda z: z + 3]
-        temp_action_types = [ActionTypes.filter, ActionTypes.enhanceAction, ActionTypes.custom]
+        temp_action_types = [ActionTypes.FILTER, ActionTypes.ENHANCE_ACTION, ActionTypes.CUSTOM]
 
         steps = [Step(temp_names[i], temp_values[i], temp_executables[i], temp_action_types[i]) for i in range(len(temp_names))]
 

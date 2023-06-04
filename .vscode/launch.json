@@ -10,7 +10,6 @@
             "program": "${file}",
             "cwd": "${workspaceRoot}",
             "env": {},
-            "envFile": "${workspaceRoot}/.venv",
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",

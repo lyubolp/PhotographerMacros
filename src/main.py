@@ -7,15 +7,16 @@ import sys
 from functools import reduce
 from PIL import Image, ImageOps
 
-from cli import parse_args
-from execution import execute_query
-from preset import Step, ActionTypes
-from presets import load_presets
-from output import OutputHandler
-from queries import load_queries
+from src.cli import parse_args
+from src.execution import execute_query
+from src.preset import Step, ActionTypes
+from src.presets import load_presets
+from src.output import OutputHandler
+from src.queries import load_queries
+
 
 # TODO Move this to execution.py
-def execute_step(img: Image, step: Step) -> Image:
+def execute_step(img: Image.Image, step: Step) -> Image.Image:
     """
     Executes a given step on an Image
 
@@ -23,14 +24,14 @@ def execute_step(img: Image, step: Step) -> Image:
     :param step: The step to be applied
     :return: The resulting image
     """
-    output.print("Applying {} with value {}".format(step.name, step.value))
+    output.print(f"Applying {step.name} with value {step.value}")
 
-    if step.action_type == ActionTypes.enhanceAction:
+    if step.action_type == ActionTypes.ENHANCE_ACTION:
         obj = step.executable(img)
         img = obj.enhance(step.value)
-    elif step.action_type == ActionTypes.filter:
+    elif step.action_type == ActionTypes.FILTER:
         img = img.filter(step.executable)
-    elif step.action_type == ActionTypes.custom:
+    elif step.action_type == ActionTypes.CUSTOM:
         img = step.executable(img, step.value)
 
     return img
@@ -49,9 +50,9 @@ if __name__ == "__main__":
         OUTPUT_LEVEL = 0
 
     output = OutputHandler(OUTPUT_LEVEL)
-    output.print("Args: {}".format(args), 2)
-    output.print("Presets: {}".format(presets), 2)
-    output.print("Queries: {}".format(queries), 2)
+    output.print(f"Args: {args}", 2)
+    output.print(f"Presets: {presets}", 2)
+    output.print(f"Queries: {queries}", 2)
 
     if args["list"]:
         output.print("Available presets:")
@@ -71,13 +72,13 @@ if __name__ == "__main__":
     if args["query"] is not None:
         query_name = args["query"]
 
-        try: 
+        try:
             result = execute_query(query_name, queries, source_image)
         except ValueError as e:
-            output.print("Error 3: {}".format(e))
+            output.print(f"Error 3: {e}")
             sys.exit(1)
 
-        output.print("Result: {}".format(result))
+        output.print(f"Result: {result}")
         output.print("Done")
         sys.exit(0)
 
@@ -92,8 +93,8 @@ if __name__ == "__main__":
     # There should be exactly one preset with the given name
     preset = [p for p in presets if p.name == preset_name][0]
 
-    output.print("Applying preset {} to {}. Result will be written at {}"
-                 .format(preset_name, source_image, target_image))
+    output.print(f"Applying preset {preset_name} to {source_image}. \
+                 Result will be written at {target_image}")
 
     with Image.open(source_image) as im:
         # For some reason, some vertical images are not actually saved as vertical, but

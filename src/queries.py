@@ -4,8 +4,8 @@ Contains logic for parsing the queries saved in the JSON
 import json
 from typing import List
 
-from dominant_color import calculate_dominant_color
-from query import Query
+from src.dominant_color import calculate_dominant_color
+from src.query import Query
 
 objects = {
     "dominant_color": calculate_dominant_color,
@@ -24,7 +24,7 @@ def load_queries(path="queries.json", objects_dict=None) -> List[Query]:
     if objects_dict is None:
         objects_dict = objects
 
-    with open(path) as file_handler:
+    with open(path, encoding="utf-8") as file_handler:
         queries_dict = json.loads(file_handler.read())["queries"]
 
     result = []
