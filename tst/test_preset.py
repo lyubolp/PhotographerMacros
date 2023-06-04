@@ -1,6 +1,6 @@
 import unittest
 
-from preset import ActionTypes, Step, Preset
+from src.preset import ActionTypes, Step, Preset
 
 
 class TestStep(unittest.TestCase):

@@ -3,8 +3,8 @@ import os
 import unittest
 from json import JSONDecodeError
 
-from preset import Preset, Step, ActionTypes
-from presets import load_presets
+from src.preset import Preset, Step, ActionTypes
+from src.presets import load_presets
 
 
 def default_action_1(value: float):

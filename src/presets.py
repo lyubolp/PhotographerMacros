@@ -5,9 +5,9 @@ import json
 from typing import List
 from PIL import ImageEnhance, ImageFilter
 
-from change_color_balance import change_color_balance
-from color_temperature import change_temperature
-from preset import Preset, Step, ActionTypes
+from src.change_color_balance import change_color_balance
+from src.color_temperature import change_temperature
+from src.preset import Preset, Step, ActionTypes
 
 objects = {
     "color": (ImageEnhance.Color, ActionTypes.enhanceAction),

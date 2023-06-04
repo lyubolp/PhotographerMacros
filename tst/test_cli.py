@@ -14,7 +14,7 @@ class CLITests(unittest.TestCase):
         self.assertTrue(result['verbosity'])
 
     def test_03_quiet(self):
-        arguments = ['-q']
+        arguments = ['--quiet']
         result = parse_args(arguments)
         self.assertTrue(result['quiet'])
 
