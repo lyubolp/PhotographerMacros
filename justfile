@@ -12,7 +12,7 @@ lint: venv
     flake8 src
 
 test: venv
-    python3 -m unittest discover -s tests
+    python3 -m unittest discover -s tst
 
 push: venv lint test
     git push
